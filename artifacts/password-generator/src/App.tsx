@@ -1,4 +1,17 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
+
+const BG_PALETTES = [
+  ["#1e1b4b", "#312e81"],
+  ["#1a1a2e", "#16213e"],
+  ["#0f2027", "#203a43"],
+  ["#1b2838", "#2a475e"],
+  ["#0d1b2a", "#1b263b"],
+  ["#1a0533", "#3b0764"],
+  ["#052e16", "#14532d"],
+  ["#431407", "#7c2d12"],
+  ["#1c1917", "#44403c"],
+  ["#0c1445", "#1e3a5f"],
+];
 
 const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const NUMBERS = "0123456789";
@@ -70,6 +83,7 @@ function getStrength(password: string, t: typeof i18n.zh): { label: string; colo
 }
 
 export default function App() {
+  const [c1, c2] = useMemo(() => BG_PALETTES[Math.floor(Math.random() * BG_PALETTES.length)], []);
   const [lang, setLang] = useState<"zh" | "en">("zh");
   const [length, setLength] = useState(12);
   const [useSymbols, setUseSymbols] = useState(false);
@@ -95,7 +109,7 @@ export default function App() {
   return (
     <div style={{
       minHeight: "100vh",
-      background: "linear-gradient(135deg, #1e1b4b 0%, #312e81 50%, #1e1b4b 100%)",
+      background: `linear-gradient(135deg, ${c1} 0%, ${c2} 50%, ${c1} 100%)`,
       display: "flex",
       alignItems: "center",
       justifyContent: "center",
