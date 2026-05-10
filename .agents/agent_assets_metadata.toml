@@ -5,4 +5,4 @@ generated = []
 id = "yBxwfHsAiBVVzMvpHLfuj"
 uri = "file://password-generator-static.zip"
 type = "unspecified"
-title = "Password Generator 静態檔案（含隨機背景色）"
+title = "Password Generator 静態檔案（全局協調隨機配色）"
