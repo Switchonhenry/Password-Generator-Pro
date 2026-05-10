@@ -9,7 +9,10 @@ mix_letters_and_numbers = []
 mix_letters_and_numbers.extend(letters)
 mix_letters_and_numbers.extend(numbers)
 
-print("Welcome to the PyPassword Generator!")
+print("==============================")
+print("   PASSWORD GENERATOR 1.0     ")
+print("==============================")
+print("Welcome to the PyPassword Generator Pro!")
 nr_figures = int(input("How many figures would you like in your password?\n"))
 want_symbols = input("Do you want to add symbols in your password? 'Y' for yes and 'N' for no.\n").upper()
 
