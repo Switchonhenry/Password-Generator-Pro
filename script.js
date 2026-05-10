@@ -1,3 +1,21 @@
+const BG_PALETTES = [
+  ["#1e1b4b", "#312e81"],
+  ["#1a1a2e", "#16213e"],
+  ["#0f2027", "#203a43"],
+  ["#1b2838", "#2a475e"],
+  ["#0d1b2a", "#1b263b"],
+  ["#1a0533", "#3b0764"],
+  ["#052e16", "#14532d"],
+  ["#431407", "#7c2d12"],
+  ["#1c1917", "#44403c"],
+  ["#0c1445", "#1e3a5f"],
+];
+
+(function applyRandomBg() {
+  const [c1, c2] = BG_PALETTES[Math.floor(Math.random() * BG_PALETTES.length)];
+  document.body.style.background = `linear-gradient(135deg, ${c1} 0%, ${c2} 50%, ${c1} 100%)`;
+})();
+
 const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const NUMBERS = "0123456789";
 const SYMBOLS = "!#$%&()*+";
