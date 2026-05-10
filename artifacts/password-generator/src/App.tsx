@@ -4,6 +4,41 @@ const LETTERS = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 const NUMBERS = "0123456789";
 const SYMBOLS = "!#$%&()*+";
 
+const i18n = {
+  zh: {
+    title: "密碼製造器",
+    subtitle: "PyPassword Generator",
+    placeholder: "點擊「生成密碼」開始...",
+    lengthLabel: "密碼長度",
+    symbolsLabel: "包含符號",
+    symbolsDesc: "! # $ % & ( ) * +",
+    generateBtn: "✨ 生成密碼",
+    strengthLabel: "密碼強度",
+    copied: "已複製到剪貼簿！",
+    weak: "太弱",
+    fair: "普通",
+    good: "良好",
+    strong: "強",
+    lang: "EN",
+  },
+  en: {
+    title: "Password Generator",
+    subtitle: "PyPassword Generator",
+    placeholder: "Click \"Generate\" to start...",
+    lengthLabel: "Password Length",
+    symbolsLabel: "Include Symbols",
+    symbolsDesc: "! # $ % & ( ) * +",
+    generateBtn: "✨ Generate Password",
+    strengthLabel: "Strength",
+    copied: "Copied to clipboard!",
+    weak: "Weak",
+    fair: "Fair",
+    good: "Good",
+    strong: "Strong",
+    lang: "中文",
+  },
+};
+
 function generatePassword(length: number, useSymbols: boolean): string {
   const pool = LETTERS + NUMBERS + (useSymbols ? SYMBOLS : "");
   let chars = Array.from({ length }, () => pool[Math.floor(Math.random() * pool.length)]);
@@ -20,7 +55,7 @@ function generatePassword(length: number, useSymbols: boolean): string {
   return chars.join("");
 }
 
-function getStrength(password: string): { label: string; color: string; width: string } {
+function getStrength(password: string, t: typeof i18n.zh): { label: string; color: string; width: string } {
   const hasUpper = /[A-Z]/.test(password);
   const hasLower = /[a-z]/.test(password);
   const hasNumber = /[0-9]/.test(password);
@@ -28,17 +63,19 @@ function getStrength(password: string): { label: string; color: string; width: s
   const score = [hasUpper, hasLower, hasNumber, hasSymbol].filter(Boolean).length;
   const len = password.length;
 
-  if (len < 6) return { label: "太弱", color: "#ef4444", width: "20%" };
-  if (score <= 2 || len < 10) return { label: "普通", color: "#f97316", width: "45%" };
-  if (score === 3 || len < 14) return { label: "良好", color: "#eab308", width: "70%" };
-  return { label: "強", color: "#22c55e", width: "100%" };
+  if (len < 6) return { label: t.weak, color: "#ef4444", width: "20%" };
+  if (score <= 2 || len < 10) return { label: t.fair, color: "#f97316", width: "45%" };
+  if (score === 3 || len < 14) return { label: t.good, color: "#eab308", width: "70%" };
+  return { label: t.strong, color: "#22c55e", width: "100%" };
 }
 
 export default function App() {
+  const [lang, setLang] = useState<"zh" | "en">("zh");
   const [length, setLength] = useState(12);
   const [useSymbols, setUseSymbols] = useState(false);
   const [password, setPassword] = useState("");
   const [copied, setCopied] = useState(false);
+  const t = i18n[lang];
 
   function handleGenerate() {
     setPassword(generatePassword(length, useSymbols));
@@ -53,7 +90,7 @@ export default function App() {
     });
   }
 
-  const strength = password ? getStrength(password) : null;
+  const strength = password ? getStrength(password, t) : null;
 
   return (
     <div style={{
@@ -74,15 +111,37 @@ export default function App() {
         width: "100%",
         maxWidth: "420px",
         boxShadow: "0 25px 50px rgba(0,0,0,0.4)",
+        position: "relative",
       }}>
+        {/* Language Toggle */}
+        <button
+          onClick={() => { setLang(lang === "zh" ? "en" : "zh"); setPassword(""); setCopied(false); }}
+          style={{
+            position: "absolute",
+            top: "1.25rem",
+            right: "1.25rem",
+            background: "rgba(255,255,255,0.1)",
+            border: "1px solid rgba(255,255,255,0.15)",
+            borderRadius: "8px",
+            color: "rgba(255,255,255,0.7)",
+            fontSize: "0.75rem",
+            fontWeight: 600,
+            padding: "0.3rem 0.65rem",
+            cursor: "pointer",
+            letterSpacing: "0.05em",
+          }}
+        >
+          {t.lang}
+        </button>
+
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "2rem" }}>
           <div style={{ fontSize: "2.5rem", marginBottom: "0.5rem" }}>🔐</div>
           <h1 style={{ color: "#fff", fontSize: "1.6rem", fontWeight: 700, margin: 0 }}>
-            密碼製造器
+            {t.title}
           </h1>
           <p style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.85rem", margin: "0.4rem 0 0" }}>
-            PyPassword Generator
+            {t.subtitle}
           </p>
         </div>
 
@@ -107,10 +166,10 @@ export default function App() {
             flex: 1,
             letterSpacing: "0.04em",
           }}>
-            {password || "點擊「生成密碼」開始..."}
+            {password || t.placeholder}
           </span>
           {password && (
-            <button onClick={handleCopy} title="複製" style={{
+            <button onClick={handleCopy} title="Copy" style={{
               background: copied ? "rgba(34,197,94,0.2)" : "rgba(255,255,255,0.1)",
               border: "none",
               borderRadius: "8px",
@@ -129,7 +188,7 @@ export default function App() {
         {strength && (
           <div style={{ marginBottom: "1.5rem" }}>
             <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.3rem" }}>
-              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem" }}>密碼強度</span>
+              <span style={{ color: "rgba(255,255,255,0.5)", fontSize: "0.78rem" }}>{t.strengthLabel}</span>
               <span style={{ color: strength.color, fontSize: "0.78rem", fontWeight: 600 }}>{strength.label}</span>
             </div>
             <div style={{ height: "6px", background: "rgba(255,255,255,0.1)", borderRadius: "99px", overflow: "hidden" }}>
@@ -148,7 +207,7 @@ export default function App() {
         <div style={{ marginBottom: "1.5rem" }}>
           <div style={{ display: "flex", justifyContent: "space-between", marginBottom: "0.6rem" }}>
             <label style={{ color: "rgba(255,255,255,0.8)", fontSize: "0.9rem", fontWeight: 500 }}>
-              密碼長度
+              {t.lengthLabel}
             </label>
             <span style={{
               background: "rgba(99,102,241,0.4)",
@@ -188,10 +247,10 @@ export default function App() {
         }}>
           <div>
             <div style={{ color: "rgba(255,255,255,0.85)", fontSize: "0.9rem", fontWeight: 500 }}>
-              包含符號
+              {t.symbolsLabel}
             </div>
             <div style={{ color: "rgba(255,255,255,0.35)", fontSize: "0.75rem", marginTop: "0.1rem" }}>
-              ! # $ % & ( ) * +
+              {t.symbolsDesc}
             </div>
           </div>
           <button
@@ -244,12 +303,12 @@ export default function App() {
           onMouseDown={e => (e.currentTarget.style.transform = "scale(0.98)")}
           onMouseUp={e => (e.currentTarget.style.transform = "scale(1)")}
         >
-          ✨ 生成密碼
+          {t.generateBtn}
         </button>
 
         {copied && (
           <p style={{ textAlign: "center", color: "#86efac", fontSize: "0.82rem", marginTop: "0.75rem" }}>
-            已複製到剪貼簿！
+            {t.copied}
           </p>
         )}
       </div>
