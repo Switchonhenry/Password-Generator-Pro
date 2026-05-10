@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Password Generator | 密碼製造器</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="container">
+    <div class="card">
+
+      <button class="lang-toggle" id="langBtn">EN</button>
+
+      <div class="header">
+        <div class="icon">🔐</div>
+        <h1 id="title">密碼製造器</h1>
+        <p id="subtitle">PyPassword Generator</p>
+      </div>
+
+      <div class="output-box">
+        <span id="passwordDisplay" class="placeholder" data-placeholder="點擊「生成密碼」開始..."></span>
+        <button class="copy-btn" id="copyBtn" title="Copy" style="display:none">📋</button>
+      </div>
+
+      <div class="strength-bar-wrap" id="strengthWrap" style="display:none">
+        <div class="strength-labels">
+          <span id="strengthLabel">密碼強度</span>
+          <span id="strengthValue"></span>
+        </div>
+        <div class="strength-track">
+          <div class="strength-fill" id="strengthFill"></div>
+        </div>
+      </div>
+
+      <div class="field">
+        <div class="field-header">
+          <label id="lengthLabel">密碼長度</label>
+          <span class="badge" id="lengthValue">12</span>
+        </div>
+        <input type="range" id="lengthSlider" min="4" max="32" value="12" />
+        <div class="range-ends"><span>4</span><span>32</span></div>
+      </div>
+
+      <div class="symbol-row">
+        <div>
+          <div class="symbol-title" id="symbolsLabel">包含符號</div>
+          <div class="symbol-desc">! # $ % &amp; ( ) * +</div>
+        </div>
+        <button class="toggle" id="symbolToggle" data-on="false" aria-pressed="false">
+          <span class="knob"></span>
+        </button>
+      </div>
+
+      <button class="generate-btn" id="generateBtn">✨ 生成密碼</button>
+
+      <p class="copied-msg" id="copiedMsg"></p>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
