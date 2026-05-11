@@ -19,8 +19,8 @@ const SYMBOLS = "!#$%&()*+";
 
 const i18n = {
   zh: {
-    title: "密碼製造器",
-    subtitle: "PyPassword Generator",
+    title: "Password Pro",
+    subtitle: "值得信賴的安全：100% 本地生成，零數據紀錄。",
     placeholder: "點擊「生成密碼」開始...",
     lengthLabel: "密碼長度",
     symbolsLabel: "包含符號",
@@ -35,8 +35,8 @@ const i18n = {
     lang: "EN",
   },
   en: {
-    title: "Password Generator",
-    subtitle: "PyPassword Generator",
+    title: "Password Pro",
+    subtitle: "Security You Can Trust: 100% Local Generation, Zero Data Logs.",
     placeholder: "Tap \"Generate\" to start...",
     lengthLabel: "Password Length",
     symbolsLabel: "Include Symbols",
@@ -156,7 +156,7 @@ export default function App() {
 
         {/* Header */}
         <div style={{ textAlign: "center", marginBottom: "1.75rem", paddingTop: "0.25rem" }}>
-          <div style={{ fontSize: "3rem", lineHeight: 1, marginBottom: "0.75rem" }}>🔐</div>
+          <div style={{ fontSize: "3rem", lineHeight: 1, marginBottom: "0.75rem" }}>🛡️</div>
           <h1 style={{
             color: "#fff",
             fontSize: "1.65rem",
@@ -167,10 +167,14 @@ export default function App() {
             {t.title}
           </h1>
           <p style={{
-            color: "rgba(255,255,255,0.4)",
-            fontSize: "0.8rem",
-            margin: "0.35rem 0 0",
+            color: "rgba(255,255,255,0.28)",
+            fontSize: "0.75rem",
+            margin: "0.4rem 0 0",
             letterSpacing: "0.01em",
+            lineHeight: 1.5,
+            maxWidth: "260px",
+            marginLeft: "auto",
+            marginRight: "auto",
           }}>
             {t.subtitle}
           </p>

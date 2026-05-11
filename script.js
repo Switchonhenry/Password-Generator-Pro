@@ -110,7 +110,8 @@ const SYMBOLS = "!#$%&()*+";
 
 const i18n = {
   zh: {
-    title: "密碼製造器",
+    title: "Password Pro",
+    subtitle: "值得信賴的安全：100% 本地生成，零數據紀錄。",
     placeholder: "點擊「生成密碼」開始...",
     lengthLabel: "密碼長度",
     symbolsLabel: "包含符號",
@@ -124,8 +125,9 @@ const i18n = {
     langBtn: "EN",
   },
   en: {
-    title: "Password Generator",
-    placeholder: 'Click "Generate" to start...',
+    title: "Password Pro",
+    subtitle: "Security You Can Trust: 100% Local Generation, Zero Data Logs.",
+    placeholder: 'Tap "Generate" to start...',
     lengthLabel: "Password Length",
     symbolsLabel: "Include Symbols",
     generateBtn: "✨ Generate Password",
@@ -148,12 +150,13 @@ const $ = (id) => document.getElementById(id);
 function applyLang() {
   const t = i18n[lang];
   $("title").textContent = t.title;
+  $("subtitle").textContent = t.subtitle;
   $("lengthLabel").textContent = t.lengthLabel;
   $("symbolsLabel").textContent = t.symbolsLabel;
   $("generateBtn").textContent = t.generateBtn;
   $("strengthLabel").textContent = t.strengthLabel;
   $("langBtn").textContent = t.langBtn;
-  document.title = lang === "zh" ? "密碼製造器" : "Password Generator";
+  document.title = "Password Pro";
 
   const display = $("passwordDisplay");
   if (!password) {
