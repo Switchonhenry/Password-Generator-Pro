@@ -53,16 +53,23 @@ const i18n = {
 };
 
 function generatePassword(length: number, useSymbols: boolean): string {
-  // 1. 建立字元池：如果用符號就加上 SYMBOLS，否則只用字母和數字
   const pool = LETTERS + NUMBERS + (useSymbols ? SYMBOLS : "");
 
-  // 2. 直接根據 length 產生對應數量的隨機字元
-  const chars = Array.from({ length }, () => {
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    return pool[randomIndex];
-  });
+  const chars: string[] = [];
 
-  // 3. 直接合併回傳，長度絕對會精準等於 length
+  if (useSymbols) {
+    chars.push(SYMBOLS[Math.floor(Math.random() * SYMBOLS.length)]);
+  }
+
+  while (chars.length < length) {
+    chars.push(pool[Math.floor(Math.random() * pool.length)]);
+  }
+
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
   return chars.join("");
 }
 
