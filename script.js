@@ -162,6 +162,19 @@ function applyLang() {
   }
 }
 
+function showCopied() {
+  const msg = $("copiedMsg");
+  $("copyIcon").textContent = "✅";
+  $("copyIcon").classList.add("copied");
+  msg.textContent = i18n[lang].copied;
+  msg.classList.add("visible");
+  setTimeout(() => {
+    $("copyIcon").textContent = "⎘";
+    $("copyIcon").classList.remove("copied");
+    msg.classList.remove("visible");
+  }, 2000);
+}
+
 function generatePassword(length, useSymbols) {
   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbers = "0123456789";
@@ -192,12 +205,12 @@ function getStrength(pw) {
     r.test(pw),
   ).length;
   const len = pw.length;
-  if (len < 6) return { label: t.weak, color: "#ef4444", width: "20%" };
+  if (len < 6) return { label: t.weak, color: "#ff453a", width: "20%" };
   if (score <= 2 || len < 10)
-    return { label: t.fair, color: "#f97316", width: "45%" };
+    return { label: t.fair, color: "#ff9f0a", width: "45%" };
   if (score === 3 || len < 14)
-    return { label: t.good, color: "#eab308", width: "70%" };
-  return { label: t.strong, color: "#22c55e", width: "100%" };
+    return { label: t.good, color: "#ffd60a", width: "70%" };
+  return { label: t.strong, color: "#30d158", width: "100%" };
 }
 
 function updateStrength() {
@@ -235,26 +248,17 @@ $("generateBtn").addEventListener("click", () => {
   const display = $("passwordDisplay");
   display.textContent = password;
   display.classList.remove("placeholder");
-  $("copyBtn").style.display = "inline-block";
-  $("copiedMsg").textContent = "";
-  $("copyBtn").textContent = "📋";
-  $("copyBtn").classList.remove("copied");
+  $("copyIcon").style.display = "inline";
+  $("copiedMsg").classList.remove("visible");
+  $("copyIcon").textContent = "⎘";
+  $("copyIcon").classList.remove("copied");
   updateStrength();
 });
 
-// Copy
-$("copyBtn").addEventListener("click", () => {
+// Copy on output box click
+$("outputBox").addEventListener("click", () => {
   if (!password) return;
-  navigator.clipboard.writeText(password).then(() => {
-    $("copyBtn").textContent = "✅";
-    $("copyBtn").classList.add("copied");
-    $("copiedMsg").textContent = i18n[lang].copied;
-    setTimeout(() => {
-      $("copyBtn").textContent = "📋";
-      $("copyBtn").classList.remove("copied");
-      $("copiedMsg").textContent = "";
-    }, 2000);
-  });
+  navigator.clipboard.writeText(password).then(showCopied);
 });
 
 // Language toggle
@@ -263,9 +267,9 @@ $("langBtn").addEventListener("click", () => {
   password = "";
   $("passwordDisplay").textContent = i18n[lang].placeholder;
   $("passwordDisplay").classList.add("placeholder");
-  $("copyBtn").style.display = "none";
+  $("copyIcon").style.display = "none";
   $("strengthWrap").style.display = "none";
-  $("copiedMsg").textContent = "";
+  $("copiedMsg").classList.remove("visible");
   applyLang();
 });
 

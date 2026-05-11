@@ -18,10 +18,12 @@
         <p id="subtitle">PyPassword Generator</p>
       </div>
 
-      <div class="output-box">
-        <span id="passwordDisplay" class="placeholder" data-placeholder="點擊「生成密碼」開始..."></span>
-        <button class="copy-btn" id="copyBtn" title="Copy" style="display:none">📋</button>
+      <div class="output-box" id="outputBox">
+        <span id="passwordDisplay" class="placeholder" data-placeholder="點擊「生成密碼」開始...">點擊「生成密碼」開始...</span>
+        <span class="copy-icon" id="copyIcon" style="display:none">⎘</span>
       </div>
+
+      <div class="copied-msg" id="copiedMsg"></div>
 
       <div class="strength-bar-wrap" id="strengthWrap" style="display:none">
         <div class="strength-labels">
@@ -33,28 +35,31 @@
         </div>
       </div>
 
-      <div class="field">
-        <div class="field-header">
-          <label id="lengthLabel">密碼長度</label>
-          <span class="badge" id="lengthValue">12</span>
+      <div class="grouped-rows">
+        <div class="field">
+          <div class="field-header">
+            <label id="lengthLabel">密碼長度</label>
+            <span class="badge" id="lengthValue">12</span>
+          </div>
+          <input type="range" id="lengthSlider" min="4" max="32" value="12" />
+          <div class="range-ends"><span>4</span><span>32</span></div>
         </div>
-        <input type="range" id="lengthSlider" min="4" max="32" value="12" />
-        <div class="range-ends"><span>4</span><span>32</span></div>
+
+        <div class="row-divider"></div>
+
+        <div class="symbol-row">
+          <div>
+            <div class="symbol-title" id="symbolsLabel">包含符號</div>
+            <div class="symbol-desc">! # $ % &amp; ( ) * +</div>
+          </div>
+          <button class="toggle" id="symbolToggle" data-on="false" aria-pressed="false">
+            <span class="knob"></span>
+          </button>
+        </div>
       </div>
 
-      <div class="symbol-row">
-        <div>
-          <div class="symbol-title" id="symbolsLabel">包含符號</div>
-          <div class="symbol-desc">! # $ % &amp; ( ) * +</div>
-        </div>
-        <button class="toggle" id="symbolToggle" data-on="false" aria-pressed="false">
-          <span class="knob"></span>
-        </button>
-      </div>
+      <button class="generate-btn" id="generateBtn">生成密碼</button>
 
-      <button class="generate-btn" id="generateBtn">✨ 生成密碼</button>
-
-      <p class="copied-msg" id="copiedMsg"></p>
     </div>
   </div>
 
