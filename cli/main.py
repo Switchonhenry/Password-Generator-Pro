@@ -21,16 +21,18 @@ if want_symbols == "Y":
 
 password_list = []
 
-# 直接根據使用者要求的總長度 nr_figures 進行抽樣
-for _ in range(nr_figures):
-    # 使用 random.choice 直接從池子裡選一個字元，比 randint index 更直觀
-    char = random.choice(char_pool)
-    password_list.append(char)
+if want_symbols == "Y":
+    # 1. 先強迫保證至少有一個符號
+    password_list.append(random.choice(symbols))
+    # 2. 剩下的長度再從大池子裡抽
+    remaining_length = nr_figures - 1
+    for _ in range(remaining_length):
+        password_list.append(random.choice(char_pool))
+else:
+    # 如果不要符號，就照舊
+    for _ in range(nr_figures):
+        password_list.append(random.choice(char_pool))
 
-# 雖然隨機抽取已經很亂了，但為了保險（或滿足 Pro 感）可以再打亂一次
+# 3. 最後一定要 shuffle，不然第一個字永遠是符號就太好猜了
 random.shuffle(password_list)
-
-# 使用 "".join() 將清單轉換為字串，這比用迴圈一個一個 += 更有效率
 final_password = "".join(password_list)
-
-print(f"Your password is: {final_password}")
