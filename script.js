@@ -166,21 +166,24 @@ function generatePassword(length, useSymbols) {
   const letters = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
   const numbers = "0123456789";
   const symbols = "!#$%&()*+";
+  const pool = letters + numbers + (useSymbols ? symbols : "");
 
-  // 1. 建立字元池
-  let pool = letters + numbers;
+  const chars = [];
+
   if (useSymbols) {
-    pool += symbols;
+    chars.push(symbols[Math.floor(Math.random() * symbols.length)]);
   }
 
-  let result = "";
-  // 2. 根據傳入的 length 精準抽取
-  for (let i = 0; i < length; i++) {
-    const randomIndex = Math.floor(Math.random() * pool.length);
-    result += pool.charAt(randomIndex);
+  while (chars.length < length) {
+    chars.push(pool[Math.floor(Math.random() * pool.length)]);
   }
 
-  return result;
+  for (let i = chars.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [chars[i], chars[j]] = [chars[j], chars[i]];
+  }
+
+  return chars.join("");
 }
 
 function getStrength(pw) {
